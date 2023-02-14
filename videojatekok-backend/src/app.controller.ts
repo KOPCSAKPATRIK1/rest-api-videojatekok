@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Render } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Render,
+} from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { AppService } from './app.service';
 import { VideoGame } from './entities/videoGame.entity';
@@ -16,7 +24,7 @@ export class AppController {
     return { message: 'Welcome to the homepage' };
   }
 
-  @Get('/entities')
+  @Get('entities')
   async getGames() {
     const gameRepo = this.dataSource.getRepository(VideoGame);
     return gameRepo.find();
@@ -27,5 +35,11 @@ export class AppController {
     game.id = undefined;
     const gameRepo = this.dataSource.getRepository(VideoGame);
     gameRepo.save(game);
+  }
+
+  @Delete('entities/:id')
+  async deleteGame(@Param('id') id: number) {
+    const gameRepo = this.dataSource.getRepository(VideoGame);
+    gameRepo.delete(id);
   }
 }
