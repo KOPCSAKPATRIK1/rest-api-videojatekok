@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Typography, Box, withWidth } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import React from 'react'
 import { GameDto } from '../api/dto/game.dto'
 import { VideoGameApi } from '../api/videoGame.api';
