@@ -1,9 +1,13 @@
-import { Box, Modal, TextField, Typography } from '@mui/material'
-import React from 'react'
+import { Box, Button, Modal, TextField, Typography } from '@mui/material'
+import { width } from '@mui/system';
+import React, { useState } from 'react'
+import { GameDto } from '../api/dto/game.dto';
+import { VideoGameApi } from '../api/videoGame.api';
 
 type Props = {
     open: boolean;
     handleClose: () => void;
+    onGameCreated: (game: GameDto) =>  void;
 }
 
 
@@ -20,8 +24,27 @@ const style = {
     p: 4,
   };
 
+const buttonStyle = {
+  marginTop: 5,
+  justifyContent: 'center',
+  width: "100%"
+}
+
 const CreateGameModal = (props: Props) => {
     const [open, setOpen] = React.useState(false);
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState(0);
+    const [category, setCategory] = useState('');
+
+    const createGame = async () => {
+      const resp = await VideoGameApi.createOne({
+        name,
+        price,
+        category
+      });
+
+      props.onGameCreated(resp)
+    }
   return (
     <div>
     <Modal
@@ -34,9 +57,29 @@ const CreateGameModal = (props: Props) => {
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Create New Game
         </Typography> <br />
-        <TextField placeholder='Name Max 20' variant='filled' fullWidth/> <br /> <br />
-        <TextField placeholder='Price' type={'number'} variant='filled' fullWidth InputProps={{ inputProps: {min: 0, max: 10 }}}/> <br /> <br />
-        <TextField placeholder='Category' variant='filled' fullWidth/>
+        <TextField 
+          placeholder='Name (max 20)' 
+          variant='filled' 
+          fullWidth
+          onChange={(e) => setName(e.target.value)}/> <br /> <br />
+        <TextField 
+          placeholder='Price' 
+          type={'number'} 
+          variant='filled' 
+          fullWidth InputProps={{ inputProps: {min: 0, max: 10 }}}
+          onChange={(e) => setPrice(parseInt(e.target.value))}/> <br /> <br />
+        <TextField
+          placeholder='Category'
+          variant='filled' 
+          fullWidth
+          onChange={(e) => setCategory(e.target.value)}/>
+        <Button 
+          sx={buttonStyle}
+          color='primary' 
+          variant='contained'
+          onClick={createGame}>
+          Create
+          </Button>
       </Box>
     </Modal>
     </div>

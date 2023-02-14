@@ -31,7 +31,7 @@ const Game = ({data, onGameDelete}: Props) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button onClick={deleteGame} size="small">Delete</Button>
+                <Button onClick={deleteGame} variant="outlined" size="small">Delete</Button>
             </CardActions>
         </Card>
     );

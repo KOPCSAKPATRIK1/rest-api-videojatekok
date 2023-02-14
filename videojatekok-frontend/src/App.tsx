@@ -12,6 +12,9 @@ function App() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [createGamesModalOpen, setCreateGamesModalOpen] = useState(false)
 
+  const addGame = (game: GameDto) => {
+    setGames([...games, game])
+  }
   useEffect(() => {
     async function fetchAll() {
       const rep = await VideoGameApi.getAll();
@@ -29,7 +32,8 @@ function App() {
     <div>
       <CreateGameModal 
       open={createGamesModalOpen} 
-      handleClose={() => setCreateGamesModalOpen(false)}/>
+      handleClose={() => setCreateGamesModalOpen(false)}
+      onGameCreated={addGame}/>
         <AppBar position="static" >
           <Toolbar>
             <Typography color="white" flexGrow={1}>
