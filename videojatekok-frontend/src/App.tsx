@@ -1,7 +1,9 @@
+import { Card, Grid, CardActions, CardContent, Button, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { GameDto } from "./api/dto/game.dto";
 import { VideoGameApi } from "./api/videoGame.api";
 import "./App.css";
+import Game from "./components/Game";
 
 function App() {
   const [games, setGames] = useState<GameDto[]>([]);
@@ -9,19 +11,30 @@ function App() {
   useEffect(() => {
     async function fetchAll() {
       const rep = await VideoGameApi.getAll();
-
       setGames(rep);
     }
-
     fetchAll();
   }, []);
+
+  const deleteGame = (gameId: number) => {
+    setGames(games.filter((g) => g.id !== gameId))
+    
+  }
+
   return (
     <div>
-      <ul>
-        {games.map((game) => {
-          return <li> {game.name}, {game.price}, {game.category}</li>;
+      <Grid container 
+      alignItems="center"
+      justifyContent="center"
+      spacing={1}>
+      {games.map((game) => {
+          return (
+            <Grid item> 
+              <Game data={game} onGameDelete={deleteGame}/>
+            </Grid>
+          )
         })}
-      </ul>
+      </Grid>
     </div>
   );
 }

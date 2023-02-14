@@ -24,20 +24,20 @@ export class AppController {
     return { message: 'Welcome to the homepage' };
   }
 
-  @Get('entities')
+  @Get('games')
   async getGames() {
     const gameRepo = this.dataSource.getRepository(VideoGame);
     return gameRepo.find();
   }
 
-  @Post('entities')
+  @Post('games')
   async createGame(@Body() game: VideoGame) {
     game.id = undefined;
     const gameRepo = this.dataSource.getRepository(VideoGame);
     gameRepo.save(game);
   }
 
-  @Delete('entities/:id')
+  @Delete('games/:id')
   async deleteGame(@Param('id') id: number) {
     const gameRepo = this.dataSource.getRepository(VideoGame);
     gameRepo.delete(id);
