@@ -9,7 +9,8 @@ import Game from "./components/Game";
 
 function App() {
   const [games, setGames] = useState<GameDto[]>([]);
-  const [createGamesModalOpen, setcreateGamesModalOpen] = useState(false)
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [createGamesModalOpen, setCreateGamesModalOpen] = useState(false)
 
   useEffect(() => {
     async function fetchAll() {
@@ -28,13 +29,13 @@ function App() {
     <div>
       <CreateGameModal 
       open={createGamesModalOpen} 
-      handleClose={() => setcreateGamesModalOpen(false)}/>
+      handleClose={() => setCreateGamesModalOpen(false)}/>
         <AppBar position="static" >
           <Toolbar>
             <Typography color="white" flexGrow={1}>
               Games
             </Typography>
-            <Button variant="contained" onClick={() => CreateGameModal()}>Create Game</Button>
+            <Button variant="contained" onClick={() => setCreateGamesModalOpen(true)}>Create Game</Button>
           </Toolbar>
         </AppBar>
       <Grid container       sx={{ m: 0.5 }}
