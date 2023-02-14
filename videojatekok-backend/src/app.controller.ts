@@ -21,4 +21,11 @@ export class AppController {
     const gameRepo = this.dataSource.getRepository(VideoGame);
     return gameRepo.find();
   }
+
+  @Post('entities')
+  async createGame(@Body() game: VideoGame) {
+    game.id = undefined;
+    const gameRepo = this.dataSource.getRepository(VideoGame);
+    gameRepo.save(game);
+  }
 }
